@@ -1,13 +1,14 @@
+//necessary requirements
 const inquirer = require("inquirer");
 const fs = require("fs");
 const Manager = require("../lib/Manager");
 const Engineer = require("../lib/Engineer");
 const Intern = require("../lib/Intern");
-
+//array to hold employees created by prompts
 function Generate() {
     this.employees = [];
 }
-
+//prompts for each type of employee and a menu prompt
 Generate.prototype.managerPrompt = function () {
     return inquirer.prompt([
         {
@@ -213,7 +214,7 @@ Generate.prototype.internPrompt = function () {
             this.menuPrompt();
         })
 };
-
+//function to generate HTML file
 Generate.prototype.generateHTML = function () {
     fs.writeFile('./dist/index.html',
         `<!DOCTYPE html>
@@ -251,16 +252,14 @@ Generate.prototype.generateHTML = function () {
             console.log('Success');
         });
 };
-
+//function to map array of employees and create html card elements for each one
 Generate.prototype.generateTeam = function() {
     let managerIcon = `<i class="fas fa-mug-hot"></i>`;
     let engineerIcon = `<i class="fas fa-glasses"></i>`;
     let internIcon = `<i class="fas fa-user-graduate"></i>`;
-
-    //take the employees array and change them into an array of html
-        //for each html element ther3e is specific information for that type of employee
+    //pseudocode: take the employees array and change them into an array of html
+        //for each html element there is specific information for that type of employee
     //combine entire html
-
     let employeesHTML = this.employees;
 
     employeesHTML = employeesHTML.map((employee) => {
@@ -274,10 +273,10 @@ Generate.prototype.generateTeam = function() {
                         <h4 class="text-white">${managerIcon} ${employee.getRole()}</h4>
                     </div>
                     <div class="card-body">
-                        <ul class="list-unstyled">
+                        <ul class="list">
                             <li>Employee ID: ${employee.getID()}</li>
                             <li>Email: <a href="mailto:${employee.getEmail()}">${employee.getEmail()}</a></li>
-                            <li></li>
+                            <li>Office Number: ${employee.getOfficeNumber()}</li>
                         </ul>
                     </div>
                 </div>
@@ -290,10 +289,10 @@ Generate.prototype.generateTeam = function() {
                         <h4 class="text-white">${internIcon} ${employee.getRole()}</h4>
                     </div>
                     <div class="card-body">
-                        <ul class="list-unstyled">
+                        <ul class="list">
                             <li>Employee ID: ${employee.getID()}</li>
                             <li>Email: <a href="mailto:${employee.getEmail()}">${employee.getEmail()}</a></li>
-                            <li></li>
+                            <li>School: ${employee.getSchool()}</li>
                         </ul>
                     </div>
                 </div>
@@ -306,10 +305,10 @@ Generate.prototype.generateTeam = function() {
                         <h4 class="text-white">${engineerIcon} ${employee.getRole()}</h4>
                     </div>
                     <div class="card-body">
-                        <ul class="list-unstyled">
+                        <ul class="list">
                             <li>Employee ID: ${employee.getID()}</li>
                             <li>Email: <a href="mailto:${employee.getEmail()}">${employee.getEmail()}</a></li>
-                            <li></li>
+                            <li>Github Profile: <a href="https://github.com/${employee.getGithub()}" target="_blank">https://github.com/${employee.getGithub()}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -319,8 +318,9 @@ Generate.prototype.generateTeam = function() {
         }
 
     })
-
-    return ``
+//joining card elements
+    employeesHTML = employeesHTML.join("")
+    return employeesHTML;
 };
 
 module.exports = Generate
