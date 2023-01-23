@@ -1,4 +1,15 @@
 {
+  "name": "Team-Profile-Generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "__tests__"
+  },
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js"
+  },
   "dependencies": {
     "inquirer": "^8.2.4"
   },
